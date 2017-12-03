@@ -84,7 +84,7 @@
                 <a class="mr-3 d-inline-block" href="./Controller?action=news_update&board_num=<%=boarddt.get(i).getBoard_num()%>">
                 	<i class="fa fa-fw fa-wrench"></i>update</a>
                 <a class="mr-3 d-inline-block" href="./Controller?action=news_delete&board_num=<%=boarddt.get(i).getBoard_num()%>">
-                	<i class="fa fa-fw fa-wrench"></i>delete</a>
+                	<i class="fa fa-scissors" aria-hidden="true"></i>delete</a>
                 <%} %>
               </div>
             </div>

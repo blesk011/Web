@@ -114,13 +114,12 @@
 							<a class="mr-3 d-inline-block"
 								href="./Controller?action=like&board_num=<%=board.getBoard_num()%>&from=Boardlike">
 								<i class="fa fa-fw fa-thumbs-up"></i><%=board.getBoard_like()%></a>
-							<a class="mr-3 d-inline-block" href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>">list</a>
-							<a class="mr-3 d-inline-block" href="/Animal/Controller?action=add_scrap&board_num=<%=board.getBoard_num()%>">scrap</a>
+							<a class="mr-3 d-inline-block" href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>"><span><i class="fa fa-list"></i></span><span>list</span></a>
+							<a class="mr-3 d-inline-block" href="/Animal/Controller?action=add_scrap&board_num=<%=board.getBoard_num()%>"><i class="fa fa-clipboard" aria-hidden="true"></i>scrap</a>
 						</c:if>
 						<c:if test="${user_id eq null }">
-							<a
-							href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>"
-							class="mr-3 d-inline-block">list</a>
+							<a href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>">
+							<i class="fa fa-list"></i>list</a>
 						</c:if>
 						<c:if test="${user_id eq board_user_id }">
 						 <a class="mr-3 d-inline-block" href="./Controller?action=declaration&board_num=<%=board.getBoard_num()%>&news_num=<%=board.getNews_num()%>">
@@ -128,7 +127,7 @@
 							<%-- <a href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>" class="btn btn-default btn-lg">목록</a>  --%>
 						<a href="/Animal/Controller?action=boardUpdate&board_num=<%=board.getBoard_num()%>" ><i class="fa fa-fw fa-wrench"></i>update</a><!-- <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> -->
 						<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="/Animal/Controller?action=boardDelete&cate_num=<%=board.getCate_num()%>&board_num=<%=board.getBoard_num()%>">
-						<i class="fa fa-fw fa-wrench"></i>delete</a>
+						<i class="fa fa-scissors" aria-hidden="true"></i>delete</a>
 							<!-- <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> -->
 						</c:if>
 						<%-- <%
@@ -166,7 +165,7 @@
 								<thead>
 									<tr>
 										<th colspan="4"
-											style="background-color: #eeeeee; text-align: center;"><i class="fa fa-fw fa-comment"></i>delete댓글</th>
+											style="background-color: #eeeeee; text-align: center;"><i class="fa fa-fw fa-comment"></i>댓글</th>
 									</tr>
 								</thead>
 								<tbody>
