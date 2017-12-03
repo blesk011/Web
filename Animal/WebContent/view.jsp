@@ -114,20 +114,22 @@
 							<a class="mr-3 d-inline-block"
 								href="./Controller?action=like&board_num=<%=board.getBoard_num()%>&from=Boardlike">
 								<i class="fa fa-fw fa-thumbs-up"></i><%=board.getBoard_like()%></a>
-							<a class="mr-3 d-inline-block" href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>">목록</a>
+							<a class="mr-3 d-inline-block" href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>">list</a>
 							<a class="mr-3 d-inline-block" href="/Animal/Controller?action=add_scrap&board_num=<%=board.getBoard_num()%>">scrap</a>
 						</c:if>
 						<c:if test="${user_id eq null }">
 							<a
 							href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>"
-							class="mr-3 d-inline-block">목록</a>
+							class="mr-3 d-inline-block">list</a>
 						</c:if>
 						<c:if test="${user_id eq board_user_id }">
+						 <a class="mr-3 d-inline-block" href="./Controller?action=declaration&board_num=<%=board.getBoard_num()%>&news_num=<%=board.getNews_num()%>">
+                  			<i class="fa fa-fw fa-thumbs-down"></i>declaration</a>
 							<%-- <a href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>" class="btn btn-default btn-lg">목록</a>  --%>
-						<a href="/Animal/Controller?action=boardUpdate&board_num=<%=board.getBoard_num()%>" class="mr-3 d-inline-block" >수정 <!-- <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> --></a>
-						<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="/Animal/Controller?action=boardDelete&cate_num=<%=board.getCate_num()%>&board_num=<%=board.getBoard_num()%>"class="mr-3 d-inline-block" >
-							<!-- <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> -->삭제
-						</a>
+						<a href="/Animal/Controller?action=boardUpdate&board_num=<%=board.getBoard_num()%>" ><i class="fa fa-fw fa-wrench"></i>update</a><!-- <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> -->
+						<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="/Animal/Controller?action=boardDelete&cate_num=<%=board.getCate_num()%>&board_num=<%=board.getBoard_num()%>">
+						<i class="fa fa-fw fa-wrench"></i>delete</a>
+							<!-- <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> -->
 						</c:if>
 						<%-- <%
 							if (request.getSession().getAttribute("user_id") != null) {
@@ -164,7 +166,7 @@
 								<thead>
 									<tr>
 										<th colspan="4"
-											style="background-color: #eeeeee; text-align: center;">댓글</th>
+											style="background-color: #eeeeee; text-align: center;"><i class="fa fa-fw fa-comment"></i>delete댓글</th>
 									</tr>
 								</thead>
 								<tbody>
