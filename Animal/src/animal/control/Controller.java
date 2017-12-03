@@ -408,6 +408,8 @@ public class Controller extends HttpServlet {
 
 			//뷰 폼으로 넘어가는 부분
 			else if(action.equals("view")) {
+				int board_num = Integer.parseInt(request.getParameter("board_num"));
+				board.count(board_num, board.getBoard(board_num).getBoard_hit() + 1);
 				request.setAttribute("board_num", request.getParameter("board_num"));
 				address = "view.jsp";
 			}
