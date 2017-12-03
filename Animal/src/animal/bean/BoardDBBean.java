@@ -460,7 +460,6 @@ public class BoardDBBean {
 				board.setBoard_date(rs.getString("board_date"));
 				board.setBoard_like(rs.getInt("board_like"));
 				board.setBoard_hit(rs.getInt("board_hit"));
-				count(board.getBoard_num(),board.getBoard_hit()+1);
 				return board;
 			}
 		}catch(Exception e) {
