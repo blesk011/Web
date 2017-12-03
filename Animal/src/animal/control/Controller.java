@@ -173,8 +173,8 @@ public class Controller extends HttpServlet {
 				String user_id = request.getParameter("user_id");
 				//주어진 id의 중복여부를 체크해 값을 반환.
 				int check= user.registerCheck(user_id);
-				
-				
+
+
 				/*response.getWriter().write(user.registerCheck(user_id)+"");*/
 			}
 
@@ -199,12 +199,12 @@ public class Controller extends HttpServlet {
 				Enumeration oldFileNames = null;
 				File oldFile = null;
 				File newFile = null;
-		    	String board_image = "";
-		    	String newFileName = "";
-		    	int count = 1;
-		    	//<시작>업로드 된 파일 저장---------------------------------------------------------------------------------------------------------------
+				String board_image = "";
+				String newFileName = "";
+				int count = 1;
+				//<시작>업로드 된 파일 저장---------------------------------------------------------------------------------------------------------------
 				MultipartRequest multipartrequest = new MultipartRequest(request, board_path, maxSize, enType ,new DefaultFileRenamePolicy());
-				
+
 				//파라미터값 받아오기
 				boarddt.setBoard_title(multipartrequest.getParameter("board_title"));
 				boarddt.setUser_id((String)request.getSession().getAttribute("user_id"));
@@ -215,7 +215,7 @@ public class Controller extends HttpServlet {
 				String now = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());
 				newFileName = board.getNext_board() + boarddt.getUser_id() + now;
 				oldFileNames = multipartrequest.getFileNames();
-				
+
 				//입력받은 사진들의 이름을 모두 수정
 				while(oldFileNames.hasMoreElements()) {
 					String parameter = (String)oldFileNames.nextElement();
@@ -229,25 +229,25 @@ public class Controller extends HttpServlet {
 				}
 				boarddt.setBoard_image(board_image);
 				boarddt.setBoard_path(board_path);
-				
-			   //<끝>업로드 된 파일 저장---------------------------------------------------------------------------------------------------------------
-				
+
+				//<끝>업로드 된 파일 저장---------------------------------------------------------------------------------------------------------------
+
 				if(boarddt.getBoard_title() == null || boarddt.getBoard_title().equals("") || boarddt.getBoard_content() == null || boarddt.getBoard_content().equals("")) {
 					request.getSession().setAttribute("messageType", "오류 메시지");
 					request.getSession().setAttribute("messageContent", "모든 내용을 입력하세요.");
 					response.sendRedirect("news_write.jsp");
 					return;
 				}
-				
+
 				else {
 					int result = board.news_write(boarddt);
-					
+
 					if(result == -1) {
 						request.getSession().setAttribute("messageType", "오류 메시지");
 						request.getSession().setAttribute("messageContent", "글쓰기에 실패했습니다.");
 						address = "news_write.jsp";
 					}
-					
+
 					else {
 						request.setAttribute("click_id", request.getSession().getAttribute("user_id"));
 						address = "mypage.jsp";
@@ -266,7 +266,7 @@ public class Controller extends HttpServlet {
 				request.setAttribute("board_num",request.getParameter("board_num"));
 				address = "news_update.jsp";
 			}
-			
+
 			else if(action.equals("news_Update")) {
 				request.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
@@ -274,14 +274,14 @@ public class Controller extends HttpServlet {
 				Enumeration oldFileNames = null;
 				File oldFile = null;
 				File newFile = null;
-		    	String board_image = "";
-		    	String newFileName = "";
-		    	int count = 1;
-		    	//<시작>업로드 된 파일 저장---------------------------------------------------------------------------------------------------------------
-		    	MultipartRequest multipartrequest = new MultipartRequest(request, board_path, maxSize, enType ,new DefaultFileRenamePolicy());
-		    			
-		    	//파라미터값 받아오기
-		    	boarddt.setBoard_num(Integer.parseInt(multipartrequest.getParameter("board_num")));
+				String board_image = "";
+				String newFileName = "";
+				int count = 1;
+				//<시작>업로드 된 파일 저장---------------------------------------------------------------------------------------------------------------
+				MultipartRequest multipartrequest = new MultipartRequest(request, board_path, maxSize, enType ,new DefaultFileRenamePolicy());
+
+				//파라미터값 받아오기
+				boarddt.setBoard_num(Integer.parseInt(multipartrequest.getParameter("board_num")));
 				boarddt.setBoard_title(multipartrequest.getParameter("board_title"));
 				boarddt.setUser_id((String)request.getSession().getAttribute("user_id"));
 				boarddt.setBoard_content(multipartrequest.getParameter("board_content"));
@@ -291,77 +291,77 @@ public class Controller extends HttpServlet {
 				String[] old = boarddt.getBoard_image().split("/"); //기존 파일들의 불러옴
 				String[] select_image;
 				ArrayList<String> old_image = new ArrayList<String>();
-				
+
 				//arrayList에 현재 이미지들을 넣어줌
 				for(int i = 0; i < old.length; i++) {
 					old_image.add(old[i]);
 				}
-				
+
 				//선택된 파일이 있으면 저장후 선택된 파일 삭제
 				if(multipartrequest.getParameterValues("oldfile") != null)
-					{
-						select_image=multipartrequest.getParameterValues("oldfile");
-						for(int i = select_image.length - 1; 0 <= i; i--) {
-							if(Integer.parseInt(select_image[i]) == i) {
-								old_image.remove(i);
-							}
+				{
+					select_image=multipartrequest.getParameterValues("oldfile");
+					for(int i = select_image.length - 1; 0 <= i; i--) {
+						if(Integer.parseInt(select_image[i]) == i) {
+							old_image.remove(i);
 						}
 					}
+				}
 
 				//파일 이름 중복을 피하기 위해 현재 시간 생성&저장할 이름 생성
 				String now = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());
 				newFileName = boarddt.getBoard_num() +""+ boarddt.getUser_id()+now;
 				oldFileNames = multipartrequest.getFileNames();
-				
+
 				if(oldFileNames != null) {
-				//새로 업로드한 파일이 있는 경우 5개 까지 저장.
-				while(oldFileNames.hasMoreElements()) {
-					
-					//입력받은 사진들의 이름을 모두 수정
-					String parameter = (String)oldFileNames.nextElement();
-					if(multipartrequest.getOriginalFileName(parameter) == null)
-						continue;
-					oldFile = new File(board_path + "/" + multipartrequest.getOriginalFileName(parameter));
-					newFile = new File(board_path + "/" + newFileName+count);
-					board_image = newFileName + count;
-					oldFile.renameTo(newFile);
-					count++;
-					
-					old_image.add(board_image);
-					if(old_image.size() > 3)
-						break;
-				}
+					//새로 업로드한 파일이 있는 경우 5개 까지 저장.
+					while(oldFileNames.hasMoreElements()) {
+
+						//입력받은 사진들의 이름을 모두 수정
+						String parameter = (String)oldFileNames.nextElement();
+						if(multipartrequest.getOriginalFileName(parameter) == null)
+							continue;
+						oldFile = new File(board_path + "/" + multipartrequest.getOriginalFileName(parameter));
+						newFile = new File(board_path + "/" + newFileName+count);
+						board_image = newFileName + count;
+						oldFile.renameTo(newFile);
+						count++;
+
+						old_image.add(board_image);
+						if(old_image.size() > 3)
+							break;
+					}
 					board_image = "";
-				for(int i = 0; i < old_image.size(); i++) {
-					board_image += old_image.get(i) + "/";
+					for(int i = 0; i < old_image.size(); i++) {
+						board_image += old_image.get(i) + "/";
+					}
+					boarddt.setBoard_image(board_image);
 				}
-				boarddt.setBoard_image(board_image);
-			}
-				
+
 				else {
-				//새로 받은 이미지 파일이 없을 경우에 현재 남은 image를 다시 저장시킴	
+					//새로 받은 이미지 파일이 없을 경우에 현재 남은 image를 다시 저장시킴	
 					if(old_image.isEmpty()) {
 						request.getSession().setAttribute("messageType", "오류 메시지");
 						request.getSession().setAttribute("messageContent", "이미지는 1개이상 남아있어야 합니다.");
 						response.sendRedirect("update.jsp");
 					}
-					
+
 					for(int i = 0; i < old_image.size(); i++) {
 						board_image += old_image.get(i) + "/";
 					}
-					
+
 					boarddt.setBoard_image(board_image);
 				}
-		        //<끝>업로드 된 파일 저장---------------------------------------------------------------------------------------------------------------
-				
+				//<끝>업로드 된 파일 저장---------------------------------------------------------------------------------------------------------------
+
 				if(boarddt.getBoard_title() == null || boarddt.getBoard_title().equals("") || boarddt.getBoard_content() == null || boarddt.getBoard_content().equals("") ) {
 					request.getSession().setAttribute("messageType", "오류 메시지");
 					request.getSession().setAttribute("messageContent", "모든 내용을 입력하세요.");
 					address = "news_update.jsp";
 				}
-				
+
 				int result = board.news_update(boarddt);
-				
+
 				if(result == -1) {
 					request.getSession().setAttribute("messageType", "오류 메시지");
 					request.getSession().setAttribute("messageContent", "글 수정이 실패했습니다.");
@@ -450,21 +450,21 @@ public class Controller extends HttpServlet {
 			}
 
 			//회원정보 수정 폼으로 매칭
-		      else if(action.equals("update_user")) {
-		         UserDataBean userdt = user.getUser((String)request.getSession().getAttribute("user_id"));
-		         String confirm_pw = SHA1.sha1(request.getParameter("confirm_pw"));
-		         if(confirm_pw.equals(userdt.getUser_pw())) {
-		            request.setAttribute("user_name", userdt.getUser_name());
-		            request.setAttribute("user_phone", userdt.getUser_phone());
-		            address = "user_update.jsp";
-		         }
-		         
-		         else {
-		            request.getSession().setAttribute("messageType", "오류 메시지");
-		            request.getSession().setAttribute("messageContent", "비밀번호가 틀렸습니다.");
-		            address = "Confirmpassword.jsp";
-		         }
-		      }
+			else if(action.equals("update_user")) {
+				UserDataBean userdt = user.getUser((String)request.getSession().getAttribute("user_id"));
+				String confirm_pw = SHA1.sha1(request.getParameter("confirm_pw"));
+				if(confirm_pw.equals(userdt.getUser_pw())) {
+					request.setAttribute("user_name", userdt.getUser_name());
+					request.setAttribute("user_phone", userdt.getUser_phone());
+					address = "user_update.jsp";
+				}
+
+				else {
+					request.getSession().setAttribute("messageType", "오류 메시지");
+					request.getSession().setAttribute("messageContent", "비밀번호가 틀렸습니다.");
+					address = "Confirmpassword.jsp";
+				}
+			}
 
 			//페이징을 처리해주는 부분
 			else if(action.equals("paging")) {
@@ -474,26 +474,26 @@ public class Controller extends HttpServlet {
 			}
 
 			//회원정보 수정해주는 부분
-		      else if(action.equals("user_update_comp")) {
-		         UserDataBean userdt = new UserDataBean();
-		         userdt.setUser_phone(request.getParameter("user_phone"));
-		         userdt.setUser_id((String)request.getSession().getAttribute("user_id"));
-		         String user_pw = request.getParameter("user_pw");
-		         String check_passwd = request.getParameter("check_passwd");
-		         
-		         if(!user_pw.equals(check_passwd) || user_pw == null || user_pw.equals("") || userdt.getUser_phone() == null || userdt.getUser_phone().equals("") || check_passwd == null || check_passwd.equals("")) {
-		            request.setAttribute("user_name", userdt.getUser_name());
-		            request.setAttribute("user_phone", userdt.getUser_phone());
-		            request.getSession().setAttribute("messageType", "오류 메시지");
-		            request.getSession().setAttribute("messageContent", "다시 확인해 주세요.");
-		            address = "user_update.jsp";
-		         }
-		         
-		         userdt.setUser_pw(SHA1.sha1(user_pw));
-		         user.update_user(userdt);
-		         request.setAttribute("click_id", userdt.getUser_id());
-		         address = "mypage.jsp";
-		      }
+			else if(action.equals("user_update_comp")) {
+				UserDataBean userdt = new UserDataBean();
+				userdt.setUser_phone(request.getParameter("user_phone"));
+				userdt.setUser_id((String)request.getSession().getAttribute("user_id"));
+				String user_pw = request.getParameter("user_pw");
+				String check_passwd = request.getParameter("check_passwd");
+
+				if(!user_pw.equals(check_passwd) || user_pw == null || user_pw.equals("") || userdt.getUser_phone() == null || userdt.getUser_phone().equals("") || check_passwd == null || check_passwd.equals("")) {
+					request.setAttribute("user_name", userdt.getUser_name());
+					request.setAttribute("user_phone", userdt.getUser_phone());
+					request.getSession().setAttribute("messageType", "오류 메시지");
+					request.getSession().setAttribute("messageContent", "다시 확인해 주세요.");
+					address = "user_update.jsp";
+				}
+
+				userdt.setUser_pw(SHA1.sha1(user_pw));
+				user.update_user(userdt);
+				request.setAttribute("click_id", userdt.getUser_id());
+				address = "mypage.jsp";
+			}
 
 			//탈퇴 버튼 누를 경우
 			else if(action.equals("delete_user")) {
@@ -776,8 +776,8 @@ public class Controller extends HttpServlet {
 
 				int cate_num = Integer.parseInt(request.getParameter("cate_num"));
 				int board_num = Integer.parseInt(request.getParameter("board_num"));
-				
-				int result = board.delete(board_num);
+
+				int result = board.news_delete(board_num);
 
 				if(result == -1) {
 					request.getSession().setAttribute("messageType", "오류 메세지");
@@ -829,7 +829,7 @@ public class Controller extends HttpServlet {
 			}
 			else if(action.equals("MngrUserAction")) {
 				String mngrAction = request.getParameter("mngrAction");
-				
+
 				if(mngrAction != null) {
 					if(mngrAction.equals("banUser")) {
 						UserDBBean.getinstance().banUser(request.getParameter("user_id"));
@@ -848,7 +848,7 @@ public class Controller extends HttpServlet {
 			}
 			else if(action.equals("MngrStaffAction")) {
 				String mngrAction = request.getParameter("mngrAction");
-				
+
 				if(mngrAction != null) {
 					if(mngrAction.equals("dismissStaff")) {
 						UserDBBean.getinstance().startUser(request.getParameter("user_id"));
@@ -858,7 +858,7 @@ public class Controller extends HttpServlet {
 				staffList = UserDBBean.getinstance().getAllStaff();
 				request.setAttribute("staffList", staffList);
 				request.setAttribute("count", new Integer(staffList.size()));
-				
+
 				address="/mngr/staff/staffManage.jsp";
 			}
 			else if(action.equals("MngrDeclarAction")) {
@@ -868,15 +868,11 @@ public class Controller extends HttpServlet {
 					if(mngrAction.equals("boardDelete")){
 						BoardDBBean.getinstance().news_delete(Integer.parseInt(request.getParameter("board_num")));
 					}
-					else if(mngrAction.equals("banUser")) {
-						String user_id = request.getParameter("user_id");
-						UserDBBean.getinstance().banUser(user_id);
-					}
 				}
 
 				ArrayList<DeclarationDataBean> declarList = null; 
 				declarList = DeclarationDBBean.getinstance().declaration_getList();
-				
+
 				request.setAttribute("declarList", declarList);
 				request.setAttribute("count", new Integer(declarList.size()));
 
@@ -884,7 +880,7 @@ public class Controller extends HttpServlet {
 			}
 			else if(action.equals("MngrCategoryAction")) {
 				String mngrAction = request.getParameter("mngrAction");
-				
+
 				if(mngrAction != null) {
 					if(mngrAction.equals("newCategory")) {
 						CateDBBean.getinstance().add_cate(request.getParameter("cate_name"));
@@ -903,18 +899,18 @@ public class Controller extends HttpServlet {
 			}
 			else if(action.equals("MngrBanAction")) {
 				String mngrAction = request.getParameter("mngrAction");
-				
+
 				if(mngrAction != null) {
 					if(mngrAction.equals("userStart")) {
 						UserDBBean.getinstance().startUser(request.getParameter("user_id"));
 					}
 				}
-				
+
 				ArrayList<UserDataBean> bannedUserList = null;
 				bannedUserList = UserDBBean.getinstance().getBannedUser();
 				request.setAttribute("bannedUserList", bannedUserList);
 				request.setAttribute("count", new Integer(bannedUserList.size()));
-				
+
 				address="/mngr/member/stopMemberManage.jsp";
 			}
 			//댓글 쓰기

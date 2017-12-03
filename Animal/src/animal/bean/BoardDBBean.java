@@ -197,6 +197,7 @@ public class BoardDBBean {
 	//뉴스피드 글 삭제
 	public int news_delete(int board_num) {
 		String SQL="DELETE FROM board WHERE board_num = ?";
+		System.out.println(board_num);
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, board_num);
@@ -468,19 +469,6 @@ public class BoardDBBean {
 		return null;
 	}
 
-	//게시글 삭제
-	public int delete(int board_num) {
-		String SQL="delete from board WHERE board_num = ?";
-
-		try {
-			PreparedStatement pstmt=conn.prepareStatement(SQL);
-			pstmt.setInt(1, board_num);
-			return pstmt.executeUpdate();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return -1;
-	}
 	/**
 	 * 
 	 * @param searchName
