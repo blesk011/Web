@@ -156,8 +156,6 @@ public class Controller extends HttpServlet {
 						address = "login.jsp";
 					}
 				}
-				
-				address = "index.jsp";
 			}
 
 			//글쓰기폼을 매칭시켜주는 부분
