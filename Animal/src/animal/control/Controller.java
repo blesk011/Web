@@ -201,7 +201,7 @@ public class Controller extends HttpServlet {
 				request.setCharacterEncoding("utf-8");
 				String user_name = request.getParameter("user_name");
 				String user_id = request.getParameter("user_id");
-				String user_pw = request.getParameter("user_pw");
+				String user_pw = SHA1.sha1(request.getParameter("user_pw"));
 				int result = user.update_PW(user_name, user_id, user_pw);
 				if(result == -1) {
 					request.getSession().setAttribute("messageType", "오류 메시지");
