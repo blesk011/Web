@@ -182,10 +182,22 @@ public class Controller extends HttpServlet {
 			else if (action.equals("forgetID")) {
 				address = "forgetID.jsp";
 			}
+			else if(action.equals("showID")) {
+				 request.setCharacterEncoding("utf-8");
+				  String user_name = request.getParameter("user_name");
+				  String user_phone = request.getParameter("user_phone");
+				  String user_id = user.searchId(user_name, user_phone);
+				  request.setAttribute("user_name", user_name);
+				  request.setAttribute("user_id", user_id);
+				  address = "showID.jsp";
+			}
 
 			//비밀번호찾기 폼을 매칭시켜주는부분
 			else if (action.equals("forgetPW")) {
 				address = "forgetPW.jsp";
+			}
+			else if(action.equals("showPW")) {
+				
 			}
 
 			//뉴스피드 글쓰기폼을 매칭시켜주는 부분
