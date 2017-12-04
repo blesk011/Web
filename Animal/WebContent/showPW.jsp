@@ -18,13 +18,6 @@
   <link href="./Resources/css/sb-admin.css" rel="stylesheet">
   <link href="css/bootstrap.css" rel="stylesheet">
 </head>
-<%-- <%
-	  request.setCharacterEncoding("utf-8");
-	  String user_id = request.getParameter("user_id");
-	  String user_phone = request.getParameter("user_phone");
-	  UserDBBean userdbbean = UserDBBean.getinstance();
-	  String user_pw = userdbbean.searchPw(user_id, user_phone);
-%> --%>
 <body class="bg-dark">
   <div class="container">
     <div class="card card-login mx-auto mt-5">
@@ -33,19 +26,13 @@
 			<center>
 	      		<div class="card-body">
 	          		<div class="form-group">
-						${user_id}님의 비밀번호는
-					</div>
-					<div class="form-group">
-						<h1>${user_pw }</h1>		
-					</div>
-					<div class="form-group">						
-						입니다. 
+						${user_id}님의 비밀번호가 변경되었습니다.
 					</div>
 				</div>
 			</center>
 	      <div class="text-center">
 	          <a class="btn btn-primary btn-block" href="./Controller?action=login">로그인</a>
-	        </div>	
+	       </div>	
       </c:if>
      </div> 			
       <c:if test="${user_id eq null }">
@@ -59,7 +46,6 @@
         		<input type="button" value="처음으로" class="btn btn-primary btn-block" onclick="location.href='./Controller?action=forgetPW'">     							
 			</center>
 		</c:if>
-       
       </div>
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
