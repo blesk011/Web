@@ -25,24 +25,24 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
   	  <ul class="navbar-nav navbar-sidenav"><br>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-      	  <span class="nav-link-text"><h3>회원관리</h3></span>
+      	  <span class="nav-link-text"><h3><i class="fa fa-users" aria-hidden="true"></i>회원관리</h3></span>
        	   <a class="nav-link" href="/Animal/Controller?action=MngrUserAction">
-        	    <span class="nav-link-text"><h5>전체회원정보</h5></span>
+        	    <span class="nav-link-text"><h5><i class="fa fa-address-card" aria-hidden="true"></i>전체회원정보</h5></span>
            </a>
            <a class="nav-link" href="/Animal/Controller?action=MngrBanAction">
-        	    <span class="nav-link-text"><h5>활동정지멤버</h5></span>
+        	    <span class="nav-link-text"><h5><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>활동정지멤버</h5></span>
            </a>
-           <span class="nav-link-text"><h3>스탭관리</h3></span>
+           <span class="nav-link-text"><h3><i class="fa fa-user-circle-o" aria-hidden="true"></i>스탭관리</h3></span>
            <a class="nav-link" href="/Animal/Controller?action=MngrStaffAction">
-        	    <span class="nav-link-text"><h5>스탭</h5></span>
+        	    <span class="nav-link-text"><h5><i class="fa fa-user-circle-o" aria-hidden="true"></i>스탭</h5></span>
            </a>
-           <span class="nav-link-text"><h3>카테고리 관리</h3></span>
+           <span class="nav-link-text"><h3><i class="fa fa-th-list" aria-hidden="true"></i>카테고리 관리</h3></span>
            <a class="nav-link" href="/Animal/Controller?action=MngrCategoryAction">
-        	    <span class="nav-link-text"><h5>카테고리</h5></span>
+        	    <span class="nav-link-text"><h5><i class="fa fa-th-list" aria-hidden="true"></i>카테고리</h5></span>
            </a>
-           <span class="nav-link-text"><h3>신고 관리</h3></span>
+           <span class="nav-link-text"><h3><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>신고 관리</h3></span>
            <a class="nav-link" href="/Animal/Controller?action=MngrDeclarAction">
-        	    <span class="nav-link-text"><h5>신고글</h5></span>
+        	    <span class="nav-link-text"><h5><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>신고글</h5></span>
            </a>
         </li>
       </ul>
