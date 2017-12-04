@@ -183,29 +183,35 @@ public class Controller extends HttpServlet {
 				address = "forgetID.jsp";
 			}
 			else if(action.equals("showID")) {
-				 request.setCharacterEncoding("utf-8");
-				  String user_name = request.getParameter("user_name");
-				  String user_phone = request.getParameter("user_phone");
-				  String user_id = user.searchId(user_name, user_phone);
-				  request.setAttribute("user_name", user_name);
-				  request.setAttribute("user_id", user_id);
-				  address = "showID.jsp";
+				request.setCharacterEncoding("utf-8");
+				String user_name = request.getParameter("user_name");
+				String user_phone = request.getParameter("user_phone");
+				String user_id = user.searchId(user_name, user_phone);
+				request.setAttribute("user_name", user_name);
+				request.setAttribute("user_id", user_id);
+				address = "showID.jsp";
 			}
 
 			//비밀번호찾기 폼을 매칭시켜주는부분
 			else if (action.equals("forgetPW")) {
 				address = "forgetPW.jsp";
 			}
-			else if(action.equals("showPW")) {
+			//잃어버린 비밀번호 수정
+			else if(action.equals("update_pw")) {
 				request.setCharacterEncoding("utf-8");
-				  String user_id = request.getParameter("user_id");
-				  String user_phone = request.getParameter("user_phone");
-				  String user_pw = user.searchPw(user_id, user_phone);
-				  String user_name = user.getUser(user_id).getUser_name();
-				  request.setAttribute("user_name", user_name);
-				  request.setAttribute("user_pw", user_pw);
-				  request.setAttribute("user_id", user_id);
-				  address = "showPW.jsp";
+				String user_name = request.getParameter("user_name");
+				String user_id = request.getParameter("user_id");
+				String user_pw = request.getParameter("user_pw");
+				int result = user.update_PW(user_name, user_id, user_pw);
+				if(result == -1) {
+					request.getSession().setAttribute("messageType", "오류 메시지");
+					request.getSession().setAttribute("messageContent", "내부적인 오류입니다. 다시 시도해 주세요.");
+					address = "forgetPW.jsp";
+				}
+				else {
+					request.setAttribute("user_id", user_id);
+					address = "showPW.jsp";
+				}
 			}
 
 			//뉴스피드 글쓰기폼을 매칭시켜주는 부분
