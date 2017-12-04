@@ -144,25 +144,29 @@ public class UserDBBean {
 		return name;
 	}
 
-	public String searchPw(String user_id, String user_phone) throws SQLException {
+	public String searchPw(String user_id, String user_phone) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String SQLL = "SELECT user_pw FROM user WHERE user_id = ? AND user_phone = ? ";
-
+		String pw = null;
 		try {
 			pstmt = conn.prepareStatement(SQLL);
 			pstmt.setString(1, user_id);
 			pstmt.setString(2, user_phone);
 			rs = pstmt.executeQuery();
-			if( rs.next() )
-				return (rs.getString("user_pw"));
-			else
-				return null;
-		} finally {
-			if(rs!=null)try { rs.close(); } catch(SQLException ex) {}
-			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			rs.next();
+			pw = rs.getString("user_pw");
+		} catch(SQLException e){
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs !=null) rs.close();
+				if(pstmt !=null) pstmt.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
-
+		return pw;
 	}
 
 

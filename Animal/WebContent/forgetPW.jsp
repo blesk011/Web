@@ -21,7 +21,7 @@
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">비밀번호 찾기</div>
       <div class="card-body">
-        <form method="post" action="showPW.jsp">
+        <form method="post" action="/Animal/Controller?action=showPW">
           <div class="form-group">
             <label>아이디</label>
             <input class="form-control" id="user_id" name="user_id" type="text" placeholder="ID">

@@ -197,7 +197,15 @@ public class Controller extends HttpServlet {
 				address = "forgetPW.jsp";
 			}
 			else if(action.equals("showPW")) {
-				
+				request.setCharacterEncoding("utf-8");
+				  String user_id = request.getParameter("user_id");
+				  String user_phone = request.getParameter("user_phone");
+				  String user_pw = user.searchPw(user_id, user_phone);
+				  String user_name = user.getUser(user_id).getUser_name();
+				  request.setAttribute("user_name", user_name);
+				  request.setAttribute("user_pw", user_pw);
+				  request.setAttribute("user_id", user_id);
+				  address = "showPW.jsp";
 			}
 
 			//뉴스피드 글쓰기폼을 매칭시켜주는 부분
