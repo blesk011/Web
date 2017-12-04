@@ -23,9 +23,9 @@
 		var user_id = $('#user_id').val();
 		$.ajax({
 			type: 'POST',
-			url: './Controller',
+			url: './ConfirmAction',
 			dateType : "JSON",
-			data: {user_id: user_id,action:confirmAction},
+			data: {user_id: user_id},
 			success: function(result){
 			if(result == 1){
 					$('#checkMessage').html('사용할 수 있는 아이디입니다.');
