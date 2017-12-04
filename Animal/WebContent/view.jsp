@@ -125,7 +125,7 @@
 						 <a class="mr-3 d-inline-block" href="./Controller?action=declaration&board_num=<%=board.getBoard_num()%>&news_num=<%=board.getNews_num()%>">
                   			<i class="fa fa-fw fa-thumbs-down"></i>declaration</a>
 							<%-- <a href="/Animal/Controller?action=boardAction&cate_num=<%=board.getCate_num()%>" class="btn btn-default btn-lg">목록</a>  --%>
-						<a href="/Animal/Controller?action=boardUpdate&board_num=<%=board.getBoard_num()%>" ><i class="fa fa-fw fa-wrench"></i>update</a><!-- <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> -->
+						<a href="/Animal/Controller?action=UpdateAction&board_num=<%=board.getBoard_num()%>" ><i class="fa fa-fw fa-wrench" aria-hidden="true"></i>update</a><!-- <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> -->
 						<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="/Animal/Controller?action=boardDelete&cate_num=<%=board.getCate_num()%>&board_num=<%=board.getBoard_num()%>">
 						<i class="fa fa-scissors" aria-hidden="true"></i>delete</a>
 							<!-- <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> -->
