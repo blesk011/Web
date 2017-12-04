@@ -35,8 +35,8 @@
 <body class="bg-dark">
   <div class="container">
     <div class="card card-register mx-auto mt-5">
-      <div class="card-header">글수정</div>
-      <form method="get" action="./Controller?action=news_Update">
+      <div class="card-header">회원 정보 수정</div>
+      <form method="post" action="./Controller">
       <div class="card-body">
           <div class="form-group">
             <label>이름</label>: ${user_name}
