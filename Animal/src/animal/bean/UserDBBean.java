@@ -11,13 +11,13 @@ public class UserDBBean {
 	private Connection conn = null;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-	
+
 	private static UserDBBean instance = new UserDBBean();
-	
+
 	public static UserDBBean getinstance() {
 		return instance;
 	}
-	
+
 	private UserDBBean() {
 		try {
 			String dbURL = "jdbc:mysql://203.249.22.34:3306/web?autoReconnect=true&useSSL=false";
@@ -29,7 +29,7 @@ public class UserDBBean {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//���� �ð��� ���ϴ� �޼ҵ�
 	public String getDate() {
 		String SQL="SELECT NOW()";
@@ -43,7 +43,7 @@ public class UserDBBean {
 		}
 		return "";
 	}
-	
+
 	//�α����� �ϴ� �޼ҵ�
 	public int login(String user_id,String user_pw) {
 		String SQL = "SELECT user_pw FROM USER WHERE user_id = ?";
@@ -62,11 +62,11 @@ public class UserDBBean {
 		}
 		return -1; //���̵� ����
 	}
-	
+
 	//���̵� �ߺ�Ȯ��
 	public int registerCheck(String user_id) {
 		String SQL="SELECT * FROM USER WHERE user_id = ?";
-		
+
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user_id);
@@ -91,11 +91,11 @@ public class UserDBBean {
 		}
 		return -1;//error
 	}
-		
+
 	//ȸ������
 	public int register(UserDataBean member) {
 		String SQL="INSERT INTO USER VALUES (?, ?, ?, ?, ?, ?)";
-		
+
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, member.getUser_name());
@@ -105,61 +105,67 @@ public class UserDBBean {
 			pstmt.setString(5, getDate());
 			pstmt.setInt(6, member.getUser_available());
 			//int result = new likeDAO().create(member.getUser_id());
-				return pstmt.executeUpdate();
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs !=null) rs.close();
+				if(pstmt !=null) pstmt.close();
 			}catch(Exception e) {
 				e.printStackTrace();
-			}finally {
-				try {
-					if(rs !=null) rs.close();
-					if(pstmt !=null) pstmt.close();
-				}catch(Exception e) {
-					e.printStackTrace();
-				}
 			}
-			return -1;//error
 		}
-	
-    public String searchId(String user_name, String user_phone) throws SQLException {
-    	PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        String SQL = "SELECT user_id FROM user WHERE user_name = ? AND user_phone = ? ";
-        try {
-        	pstmt = conn.prepareStatement(SQL);
-        	pstmt.setString(1, user_name);
-        	pstmt.setString(2, user_phone);
-        	rs = pstmt.executeQuery();
-        	if( rs.next() )
-        		return (rs.getString("user_id"));
-        	else
-        		return null;
-        	} finally {
-        		if(rs!=null)try { rs.close(); } catch(SQLException ex) {}
-        		if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
-        		}
-    }
-    
-    public String searchPw(String user_id, String user_phone) throws SQLException {
-    	PreparedStatement pstmt = null;
-    	ResultSet rs = null;
-        String SQLL = "SELECT user_pw FROM user WHERE user_id = ? AND user_phone = ? ";
+		return -1;//error
+	}
 
-    	try {
-    		pstmt = conn.prepareStatement(SQLL);
-    		pstmt.setString(1, user_id);
-    		pstmt.setString(2, user_phone);
-    		rs = pstmt.executeQuery();
-    		if( rs.next() )
-    			return (rs.getString("user_pw"));
-    		else
-    			return null;
-    		} finally {
-    			if(rs!=null)try { rs.close(); } catch(SQLException ex) {}
-    			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
-    			}
+	public String searchId(String user_name, String user_phone) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String name = null;
+		String SQL = "SELECT user_id FROM user WHERE user_name = ? AND user_phone = ? ";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, user_name);
+			pstmt.setString(2, user_phone);
+			rs = pstmt.executeQuery();
+			rs.next();
+			name = rs.getString("user_id");
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs !=null) rs.close();
+				if(pstmt !=null) pstmt.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return name;
+	}
 
-    }
-	
-		
+	public String searchPw(String user_id, String user_phone) throws SQLException {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String SQLL = "SELECT user_pw FROM user WHERE user_id = ? AND user_phone = ? ";
+
+		try {
+			pstmt = conn.prepareStatement(SQLL);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, user_phone);
+			rs = pstmt.executeQuery();
+			if( rs.next() )
+				return (rs.getString("user_pw"));
+			else
+				return null;
+		} finally {
+			if(rs!=null)try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+		}
+
+	}
+
+
 	//ȸ�� ����
 	public UserDataBean getUser(String user_id) {
 		String sql = "select * from user where user_id=?";
@@ -168,7 +174,7 @@ public class UserDBBean {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user_id);
 			rs = pstmt.executeQuery();
-					
+
 			if(rs.next()) {
 				user.setUser_name(rs.getString("user_name"));
 				user.setUser_id(rs.getString("user_id"));
@@ -177,20 +183,20 @@ public class UserDBBean {
 				user.setUser_date(rs.getString("user_date"));
 				user.setUser_available(rs.getInt("user_available"));
 			}
-				
-			}catch(SQLException e) {
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs !=null) rs.close();
+				if(pstmt !=null) pstmt.close();
+			}catch(Exception e) {
 				e.printStackTrace();
-			}finally {
-				try {
-					if(rs !=null) rs.close();
-					if(pstmt !=null) pstmt.close();
-				}catch(Exception e) {
-					e.printStackTrace();
-				}
 			}
-			return user;
 		}
-	
+		return user;
+	}
+
 	//ȸ�� Ż��
 	public boolean deleteUser(String user_id) {
 		String sql = "delete from user where user_id=?";
@@ -212,20 +218,20 @@ public class UserDBBean {
 		}
 		return true;
 	}
-	
+
 	public int update_user(UserDataBean user) {
 		String SQL="UPDATE user SET user_pw = ?, user_phone = ? WHERE user_id = ?";
 
-	      try {
-	         PreparedStatement pstmt=conn.prepareStatement(SQL);
-	         pstmt.setString(1, user.getUser_pw());
-	         pstmt.setString(2, user.getUser_phone());
-	         pstmt.setString(3, user.getUser_id());
-	         return pstmt.executeUpdate();
-	      }catch(Exception e) {
-	         e.printStackTrace();
-	      }
-	      return -1;
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			pstmt.setString(1, user.getUser_pw());
+			pstmt.setString(2, user.getUser_phone());
+			pstmt.setString(3, user.getUser_id());
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	public ArrayList<UserDataBean> getAllUser() {
 		ArrayList<UserDataBean> list = new ArrayList<UserDataBean>();
