@@ -27,7 +27,7 @@
 		<ul>
 			<li>카테고리 수 : ${count}</li>
 		</ul>
-		 <form method="post" action="/Animal/MngrCategoryAction">
+		 <form method="post" action="/Animal/Controller?action=MngrCategoryAction&mngrAction=newCategory">
 		 	<input type="text" id="cate_name" name="cate_name" placeholder="카테고리명">
 		 	<input type="hidden" name="action" value="newCategory">
 		 	<input type="submit" class="btn btn-default" value="카테고리 생성">
