@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="animal.bean.UserDBBean" %>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <!-- 부트스트랩 부분 -->
@@ -18,36 +18,31 @@
   <link href="./Resources/css/sb-admin.css" rel="stylesheet">
   <link href="css/bootstrap.css" rel="stylesheet">
 </head>
-<%
-	  request.setCharacterEncoding("utf-8");
-	  String user_name = request.getParameter("user_name");
-	  String user_phone = request.getParameter("user_phone");
-	  UserDBBean userdbbean = UserDBBean.getinstance();
-	  String user_id = userdbbean.searchId(user_name, user_phone);
-%>
 <body class="bg-dark">
   <div class="container">
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">아이디 확인</div>
-      	<%if(user_id!= null){ %>
+      <c:if test="${user_id ne null }">
 			<center>
-			<br/><br/>			
 	      		<div class="card-body">
 	          		<div class="form-group">
-						<%=user_name %>님의 아이디는<br/>
+						${user_name}님의 아이디는
 					</div>
 					<div class="form-group">
-						<h1><%=user_id %></h1>	<br/>			
+						<h1>${user_id }</h1>		
 					</div>
 					<div class="form-group">						
-						입니다. </div>
-				</div></center>
+						입니다. 
+					</div>
+				</div>
+			</center>
 	       <div class="text-center">
 	          <a class="btn btn-primary btn-block" href="./Controller?action=login">로그인</a>
 	          <a class="btn btn-primary btn-block" href="./Controller?action=forgetPW">비밀번호 찾기</a>
 	        </div>	
-      				
-      	<%} else{%>
+	       </c:if>
+      	</div>
+      	<c:if test="${user_id eq null }">
 			<div class="form-group">
 				<br/><br/><br/>
 				<center><h3>가입정보가 없습니다.</h3></center>				
@@ -56,9 +51,8 @@
        			<input type="button" value="회원가입 하기" class="btn btn-primary btn-block" onclick="location.href='./Controller?action=join'">&emsp;
         		<input type="button" value="처음으로" class="btn btn-primary btn-block" onclick="location.href='./Controller?action=forgetID'">     							
 			</center>
-		<%}%>
+		</c:if>
         </div>
-      </div>
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
