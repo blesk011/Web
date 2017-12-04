@@ -237,6 +237,20 @@ public class UserDBBean {
 		}
 		return -1;
 	}
+	
+	public int update_PW(String user_name, String user_id, String user_pw) {
+		String SQL="UPDATE user SET user_pw = ? WHERE user_id = ? and user_name = ?";
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			pstmt.setString(1, user_pw);
+			pstmt.setString(2, user_id);
+			pstmt.setString(3, user_name);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 	public ArrayList<UserDataBean> getAllUser() {
 		ArrayList<UserDataBean> list = new ArrayList<UserDataBean>();
 		try {
